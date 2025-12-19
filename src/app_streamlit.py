@@ -227,7 +227,7 @@ with tab_welcome:
         st.info("👉 Go to **Predictor** tab to start")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.caption("Developed by **Mohsin HM")
+    st.caption                       ("Developed by Mohsin HM")
 
 
 # ================== PREDICTOR PAGE ==================
