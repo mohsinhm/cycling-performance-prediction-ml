@@ -25,14 +25,63 @@ st.set_page_config(
     layout="wide"
 )
 
-# ================== CSS ==================
+# ================== CSS (UI / UX UPGRADE) ==================
 _style = """
 <style>
 html, body, [data-testid="stAppViewContainer"] {
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    background: radial-gradient(circle at top, #020617 0%, #020617 100%);
+    color: #e5e7eb;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+#MainMenu, header, footer {
+    visibility: hidden;
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.02em;
     color: #f8fafc;
 }
-#MainMenu, header, footer {visibility: hidden;}
+
+input, select {
+    background-color: #020617 !important;
+    border: 1px solid #1e293b !important;
+    border-radius: 12px !important;
+    color: #f8fafc !important;
+}
+
+.stButton > button {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border-radius: 14px;
+    padding: 0.6rem 1.4rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.stButton > button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #334155, transparent);
+    margin: 1.5rem 0;
+}
+
+.stAlert {
+    border-radius: 14px;
+}
+
+.element-container:has(canvas) {
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    padding: 0.6rem;
+}
 </style>
 """
 st.markdown(_style, unsafe_allow_html=True)
@@ -110,18 +159,16 @@ with tab_welcome:
     Predict your **average cycling speed**, **power**, and **calories burned**
     using **Machine Learning + Physics calculations**.
 
-    ###  Input Data
+    ### 🚴 Input Data
     - Rider Name  
-    - Distance (km)  
-    - Elevation Gain (m)  
-    - Ride Time (minutes)  
-    - Temperature (°C)  
+    - Distance & Elevation  
+    - Ride Time & Temperature  
     - Route Type  
-    - Rider Weight & Bike Weight  
+    - Rider & Bike Weight  
 
-    ###  Output
+    ### 📊 Output
     - Speed, Power, Calories  
-    - Graphs (side-by-side)  
+    - Side-by-side graphs  
     - Downloadable PDF report  
 
     **Developer:** Mohsin HM  
@@ -131,11 +178,13 @@ with tab_welcome:
 # ================== PREDICTOR ==================
 with tab_predictor:
 
-    st.subheader("👤 Rider Name")
+    st.markdown("## 👤 Rider Information")
     rider_name = st.text_input("Name", placeholder="e.g. Mohsin", label_visibility="collapsed")
+
     st.divider()
 
-    col1, col2 = st.columns(2)
+    st.markdown("## 📥 Ride Details")
+    col1, col2 = st.columns([1, 1], gap="large")
 
     with col1:
         distance_km = st.number_input("Distance (km)", 1.0, value=30.0)
@@ -146,12 +195,17 @@ with tab_predictor:
         elevation_gain_m = st.number_input("Elevation Gain (m)", 0.0, value=200.0)
         route_type = st.selectbox("Route Type", ["flat", "rolling", "climb"])
 
+    st.markdown("## ⚙ Rider & Bike")
     rider_weight = st.number_input("Rider Weight (kg)", 30.0, value=70.0)
     bike_weight = st.number_input("Bike Weight (kg)", 5.0, value=8.0)
 
-    st.divider()
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    if st.button("Predict & Save"):
+    btn1, btn2, btn3 = st.columns([1, 2, 1])
+    with btn2:
+        run = st.button("🚴 Predict & Save Ride")
+
+    if run:
 
         if not rider_name.strip():
             st.error("Please enter rider name")
@@ -193,12 +247,14 @@ with tab_predictor:
         })
 
         st.success(f"Prediction for {rider_name}")
-        st.metric("Speed (km/h)", f"{pred_speed:.2f}")
-        st.metric("Power (W)", f"{power:.0f}")
-        st.metric("Calories (kcal)", f"{kcal:.0f}")
 
-        st.subheader("📊 Performance Graphs")
-        graphs = {}
+        m1, m2, m3 = st.columns(3)
+        m1.metric("🚴 Speed", f"{pred_speed:.2f} km/h")
+        m2.metric("⚡ Power", f"{power:.0f} W")
+        m3.metric("🔥 Calories", f"{kcal:.0f} kcal")
+
+        st.markdown("## 📊 Performance Graphs")
+
         c1, c2, c3 = st.columns(3)
 
         with c1:
@@ -208,14 +264,12 @@ with tab_predictor:
             ax1.set_title("Speed")
             st.pyplot(fig1)
 
-
         with c2:
             fig2, ax2 = plt.subplots(figsize=(4, 3))
             ax2.bar(["Power"], [power], width=0.3)
             ax2.set_ylabel("W")
             ax2.set_title("Power")
             st.pyplot(fig2)
-
 
         with c3:
             fig3, ax3 = plt.subplots(figsize=(4, 3))
@@ -235,7 +289,7 @@ with tab_predictor:
         }
 
         pdf_file = f"ride_{rider_name}.pdf"
-        generate_pdf(pdf_file, pdf_data, graphs)
+        generate_pdf(pdf_file, pdf_data, {})
 
         with open(pdf_file, "rb") as f:
             st.download_button(
