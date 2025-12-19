@@ -110,7 +110,7 @@ with tab_welcome:
     Predict your **average cycling speed**, **power**, and **calories burned**
     using **Machine Learning + Physics calculations**.
 
-    ### 🔢 Input Data
+    ###  Input Data
     - Rider Name  
     - Distance (km)  
     - Elevation Gain (m)  
@@ -119,7 +119,7 @@ with tab_welcome:
     - Route Type  
     - Rider Weight & Bike Weight  
 
-    ### 📊 Output
+    ###  Output
     - Speed, Power, Calories  
     - Graphs (side-by-side)  
     - Downloadable PDF report  
