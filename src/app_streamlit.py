@@ -190,7 +190,7 @@ with tab_welcome:
             <b>calories burned</b> using Machine Learning combined with
             real-world cycling physics.
         </div>
-        <div>Developed by Mohsin HM</div>
+        <div class="hero-title">Developed by Mohsin HM</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -227,8 +227,6 @@ with tab_welcome:
         st.markdown('<div class="cta">', unsafe_allow_html=True)
         st.info("👉 Go to **Predictor** tab to start")
         st.markdown('</div>', unsafe_allow_html=True)
-
-    st.caption("Developed by Mohsin HM")
 
 
 # ================== PREDICTOR PAGE ==================
