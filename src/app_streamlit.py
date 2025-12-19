@@ -80,6 +80,7 @@ h1, h2, h3 {
 .cta button {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
+    text-align: center;
     border-radius: 18px;
     padding: 0.8rem 2.2rem;
     font-size: 1.05rem;
@@ -226,7 +227,7 @@ with tab_welcome:
         st.info("👉 Go to **Predictor** tab to start")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.caption("Developed by **Mohsin HM** | Cycling & Data Science")
+    st.caption("Developed by **Mohsin HM")
 
 
 # ================== PREDICTOR PAGE ==================
