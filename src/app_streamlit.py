@@ -25,7 +25,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# ================== CSS (UI / UX UPGRADE) ==================
+# ================== CSS (GLOBAL + WELCOME UI) ==================
 _style = """
 <style>
 html, body, [data-testid="stAppViewContainer"] {
@@ -34,15 +34,64 @@ html, body, [data-testid="stAppViewContainer"] {
     font-family: 'Inter', system-ui, sans-serif;
 }
 
-#MainMenu, header, footer {
-    visibility: hidden;
-}
+#MainMenu, header, footer { visibility: hidden; }
 
 h1, h2, h3 {
-    letter-spacing: -0.02em;
     color: #f8fafc;
+    letter-spacing: -0.03em;
 }
 
+/* HERO */
+.hero {
+    padding: 4.5rem 1rem 3rem 1rem;
+    text-align: center;
+}
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.05;
+}
+.hero-sub {
+    font-size: 1.15rem;
+    color: #cbd5f5;
+    max-width: 760px;
+    margin: 1.4rem auto 2.4rem auto;
+}
+
+/* FEATURE CARDS */
+.card {
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    padding: 1.8rem;
+    text-align: center;
+    height: 100%;
+}
+.card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+}
+.card p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+/* CTA BUTTON */
+.cta button {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border-radius: 18px;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border: none;
+}
+.cta button:hover {
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+
+/* INPUTS */
 input, select {
     background-color: #020617 !important;
     border: 1px solid #1e293b !important;
@@ -50,6 +99,7 @@ input, select {
     color: #f8fafc !important;
 }
 
+/* BUTTONS */
 .stButton > button {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
@@ -57,29 +107,13 @@ input, select {
     padding: 0.6rem 1.4rem;
     font-weight: 600;
     border: none;
-    transition: all 0.25s ease;
 }
 
-.stButton > button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
-}
-
-hr {
-    border: none;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #334155, transparent);
-    margin: 1.5rem 0;
-}
-
-.stAlert {
-    border-radius: 14px;
-}
-
+/* GRAPH CARDS */
 .element-container:has(canvas) {
     background: #020617;
     border: 1px solid #1e293b;
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 0.6rem;
 }
 </style>
@@ -118,12 +152,13 @@ def estimate_power_watts(speed_kmph, grade, mass_kg, CdA=0.5, Cr=0.004, rho=1.22
 # ================== SAVE HISTORY ==================
 def save_ride_history(data, path="data/ride_history.csv"):
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    df = pd.DataFrame([data])
-    df.to_csv(path, mode="a", header=not os.path.exists(path), index=False)
+    pd.DataFrame([data]).to_csv(
+        path, mode="a", header=not os.path.exists(path), index=False
+    )
 
 
 # ================== PDF ==================
-def generate_pdf(filename, data, graphs):
+def generate_pdf(filename, data):
     c = canvas.Canvas(filename, pagesize=A4)
     y = 800
 
@@ -136,14 +171,6 @@ def generate_pdf(filename, data, graphs):
         c.drawString(50, y, f"{k}: {v}")
         y -= 18
 
-    for title, path in graphs.items():
-        if os.path.exists(path):
-            y -= 30
-            c.setFont("Helvetica-Bold", 12)
-            c.drawString(50, y, title)
-            y -= 220
-            c.drawImage(ImageReader(path), 50, y, width=500, height=200)
-
     c.save()
 
 
@@ -151,31 +178,58 @@ def generate_pdf(filename, data, graphs):
 tab_welcome, tab_predictor = st.tabs(["🏠 Welcome", "🚴 Predictor"])
 
 
-# ================== WELCOME ==================
+# ================== WELCOME PAGE ==================
 with tab_welcome:
-    st.title("🚴‍♂️ Cycling Performance Prediction")
 
     st.markdown("""
-    Predict your **average cycling speed**, **power**, and **calories burned**
-    using **Machine Learning + Physics calculations**.
+    <div class="hero">
+        <div class="hero-title">Cycling Performance<br>Prediction</div>
+        <div class="hero-sub">
+            Predict your <b>average speed</b>, <b>power output</b>, and
+            <b>calories burned</b> using Machine Learning combined with
+            real-world cycling physics.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    ### 🚴 Input Data
-    - Rider Name  
-    - Distance & Elevation  
-    - Ride Time & Temperature  
-    - Route Type  
-    - Rider & Bike Weight  
+    c1, c2, c3 = st.columns(3)
 
-    ### 📊 Output
-    - Speed, Power, Calories  
-    - Side-by-side graphs  
-    - Downloadable PDF report  
+    with c1:
+        st.markdown("""
+        <div class="card">
+            <h3>🚴 Smart ML Predictions</h3>
+            <p>Trained machine learning model to estimate realistic cycling speed.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    **Developer:** Mohsin HM  
-    """)
+    with c2:
+        st.markdown("""
+        <div class="card">
+            <h3>⚡ Physics-Based Power</h3>
+            <p>Power & calories computed using aerodynamics, grade and mass.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="card">
+            <h3>📄 Professional Reports</h3>
+            <p>Download clean PDF reports for training and performance analysis.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br><br>", unsafe_allow_html=True)
+
+    b1, b2, b3 = st.columns([1, 2, 1])
+    with b2:
+        st.markdown('<div class="cta">', unsafe_allow_html=True)
+        st.info("👉 Go to **Predictor** tab to start")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.caption("Developed by **Mohsin HM** | Cycling & Data Science")
 
 
-# ================== PREDICTOR ==================
+# ================== PREDICTOR PAGE ==================
 with tab_predictor:
 
     st.markdown("## 👤 Rider Information")
@@ -183,8 +237,7 @@ with tab_predictor:
 
     st.divider()
 
-    st.markdown("## 📥 Ride Details")
-    col1, col2 = st.columns([1, 1], gap="large")
+    col1, col2 = st.columns(2)
 
     with col1:
         distance_km = st.number_input("Distance (km)", 1.0, value=30.0)
@@ -195,15 +248,12 @@ with tab_predictor:
         elevation_gain_m = st.number_input("Elevation Gain (m)", 0.0, value=200.0)
         route_type = st.selectbox("Route Type", ["flat", "rolling", "climb"])
 
-    st.markdown("## ⚙ Rider & Bike")
     rider_weight = st.number_input("Rider Weight (kg)", 30.0, value=70.0)
     bike_weight = st.number_input("Bike Weight (kg)", 5.0, value=8.0)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    btn1, btn2, btn3 = st.columns([1, 2, 1])
-    with btn2:
-        run = st.button("🚴 Predict & Save Ride")
+    run = st.button("🚴 Predict & Save Ride")
 
     if run:
 
@@ -227,23 +277,16 @@ with tab_predictor:
         pred_speed = float(model.predict(df)[0])
 
         grade = elevation_gain_m / max(distance_km * 1000, 1)
-        total_mass = rider_weight + bike_weight
-        power = estimate_power_watts(pred_speed, grade, total_mass)
+        power = estimate_power_watts(pred_speed, grade, rider_weight + bike_weight)
 
-        hours = ride_time_min / 60
-        kcal = (power * hours * 0.860421) / 0.24
+        kcal = (power * (ride_time_min / 60) * 0.860421) / 0.24
 
         save_ride_history({
             "time": datetime.now(),
             "name": rider_name,
-            "distance_km": distance_km,
-            "elevation_gain_m": elevation_gain_m,
-            "ride_time_min": ride_time_min,
-            "temperature_c": temperature_c,
-            "route_type": route_type,
-            "speed_kmph": round(pred_speed, 2),
-            "power_w": round(power, 1),
-            "calories": round(kcal, 1)
+            "speed": pred_speed,
+            "power": power,
+            "calories": kcal
         })
 
         st.success(f"Prediction for {rider_name}")
@@ -253,48 +296,33 @@ with tab_predictor:
         m2.metric("⚡ Power", f"{power:.0f} W")
         m3.metric("🔥 Calories", f"{kcal:.0f} kcal")
 
-        st.markdown("## 📊 Performance Graphs")
+        st.subheader("📊 Performance Graphs")
 
         c1, c2, c3 = st.columns(3)
 
         with c1:
-            fig1, ax1 = plt.subplots(figsize=(4, 3))
-            ax1.bar(["Speed"], [pred_speed], width=0.3)
-            ax1.set_ylabel("km/h")
-            ax1.set_title("Speed")
-            st.pyplot(fig1)
+            fig, ax = plt.subplots()
+            ax.bar(["Speed"], [pred_speed], width=0.3)
+            st.pyplot(fig)
 
         with c2:
-            fig2, ax2 = plt.subplots(figsize=(4, 3))
-            ax2.bar(["Power"], [power], width=0.3)
-            ax2.set_ylabel("W")
-            ax2.set_title("Power")
-            st.pyplot(fig2)
+            fig, ax = plt.subplots()
+            ax.bar(["Power"], [power], width=0.3)
+            st.pyplot(fig)
 
         with c3:
-            fig3, ax3 = plt.subplots(figsize=(4, 3))
-            ax3.bar(["Calories"], [kcal], width=0.3)
-            ax3.set_ylabel("kcal")
-            ax3.set_title("Calories")
-            st.pyplot(fig3)
-
-        pdf_data = {
-            "Name": rider_name,
-            "Speed (km/h)": f"{pred_speed:.2f}",
-            "Power (W)": f"{power:.0f}",
-            "Calories (kcal)": f"{kcal:.0f}",
-            "Distance (km)": distance_km,
-            "Elevation Gain (m)": elevation_gain_m,
-            "Date": datetime.now().strftime("%d-%m-%Y %H:%M")
-        }
+            fig, ax = plt.subplots()
+            ax.bar(["Calories"], [kcal], width=0.3)
+            st.pyplot(fig)
 
         pdf_file = f"ride_{rider_name}.pdf"
-        generate_pdf(pdf_file, pdf_data, {})
+        generate_pdf(pdf_file, {
+            "Name": rider_name,
+            "Speed": f"{pred_speed:.2f}",
+            "Power": f"{power:.0f}",
+            "Calories": f"{kcal:.0f}",
+            "Date": datetime.now().strftime("%d-%m-%Y %H:%M")
+        })
 
         with open(pdf_file, "rb") as f:
-            st.download_button(
-                "📄 Download PDF Report",
-                f,
-                file_name=pdf_file,
-                mime="application/pdf"
-            )
+            st.download_button("📄 Download PDF Report", f, file_name=pdf_file)
