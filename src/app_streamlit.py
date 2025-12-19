@@ -190,7 +190,7 @@ with tab_welcome:
             <b>calories burned</b> using Machine Learning combined with
             real-world cycling physics.
         </div>
-        <div class="hero-title">Developed by Mohsin HM</div>
+        <div class="hero-sub">Developed by Mohsin HM</div>
     </div>
     """, unsafe_allow_html=True)
 
