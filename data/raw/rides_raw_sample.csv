@@ -1,0 +1,7 @@
+distance_km,elevation_gain_m,ride_time_min,temperature_c,route_type,avg_speed_kmph
+25,150,70,28,rolling,21.4
+40,300,115,30,climb,20.8
+15,50,35,26,flat,25.7
+60,500,150,29,rolling,24.0
+80,900,210,27,climb,22.0
+30,100,75,31,flat,24.2
