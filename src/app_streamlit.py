@@ -184,13 +184,13 @@ with tab_welcome:
 
     st.markdown("""
     <div class="hero">
-        <div class="hero-title">Cycling Performance<br>Prediction</div>
+        <div class="hero-title">Cycling Performance<br><span style="color:#3B9797">Prediction</span></div>
         <div class="hero-sub">
             Predict your <b>average speed</b>, <b>power output</b>, and
             <b>calories burned</b> using Machine Learning combined with
             real-world cycling physics.
         </div>
-        <div class="hero-sub"> Developed by :<span style="color: #3B9797">Mohsin HM </span></div>
+        <div class="hero-sub"> Developed by :<span style="color: #3B9797"> Mohsin HM </span></div>
     </div>
     """, unsafe_allow_html=True)
 
