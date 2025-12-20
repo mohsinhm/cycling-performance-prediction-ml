@@ -183,12 +183,13 @@ with tab_welcome:
 
     st.markdown("""
     <div class="hero">
-        <div class="hero-title">Cycling Performance<br>Prediction</div>
+        <div class="hero-title">Cycling Performance<br><span style="color: #3B9797">Prediction</span></div>
         <div class="hero-sub">
             Predict your <b>average speed</b>, <b>power output</b>, and
             <b>calories burned</b> using Machine Learning combined with
             real-world cycling physics.
         </div>
+        <div> Developed by : <span style="color: #3B9797"> Mohsin hm</span> </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -226,8 +227,6 @@ with tab_welcome:
         st.info("👉 Go to **Predictor** tab to start")
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.caption("Developed by **Mohsin HM** | Cycling & Data Science")
-
 
 # ================== PREDICTOR PAGE ==================
 with tab_predictor:
@@ -253,7 +252,7 @@ with tab_predictor:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    run = st.button("🚴 Predict & Save Ride")
+    run = st.button("Predict & Save Ride")
 
     if run:
 
