@@ -94,7 +94,7 @@ h1, h2, h3 {
 
 /* INPUTS */
 input, select {
-    background-color: #3B9797 !important;
+    background-color: black !important;
     border: 1px solid #1e293b !important;
     border-radius: 12px !important;
     color: #f8fafc !important;
