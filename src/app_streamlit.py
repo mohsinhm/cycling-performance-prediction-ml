@@ -94,7 +94,7 @@ h1, h2, h3 {
 
 /* INPUTS */
 input, select {
-    background-color: #020617 !important;
+    background-color: white !important;
     border: 1px solid #1e293b !important;
     border-radius: 12px !important;
     color: #f8fafc !important;
@@ -253,7 +253,7 @@ with tab_predictor:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    run = st.button("🚴 Predict & Save Ride")
+    run = st.button(" Predict & Save Ride")
 
     if run:
 
