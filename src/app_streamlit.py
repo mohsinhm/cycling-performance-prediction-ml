@@ -78,7 +78,7 @@ h1, h2, h3 {
 
 /* CTA BUTTON */
 .cta button {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: #3B9797;
     color: #3B9797;
     border-radius: 18px;
     padding: 0.8rem 2.2rem;
