@@ -29,7 +29,7 @@ st.set_page_config(
 _style = """
 <style>
 html, body, [data-testid="stAppViewContainer"] {
-    background: #FCF8F8;
+    background: radial-gradient(circle at top, #020617 0%, #020617 100%;
     color: #e5e7eb;
     font-family: 'Inter', system-ui, sans-serif;
 }
