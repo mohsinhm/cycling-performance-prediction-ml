@@ -232,7 +232,7 @@ with tab_welcome:
 # ================== PREDICTOR PAGE ==================
 with tab_predictor:
 
-    st.markdown("## 👤 Rider Information")
+    st.markdown("## 👤 Rider <span style="color: #3B9797">Information</span>")
     rider_name = st.text_input("Name", placeholder="e.g. Mohsin", label_visibility="collapsed")
 
     st.divider()
