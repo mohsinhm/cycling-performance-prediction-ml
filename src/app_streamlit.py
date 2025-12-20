@@ -29,7 +29,7 @@ st.set_page_config(
 _style = """
 <style>
 html, body, [data-testid="stAppViewContainer"] {
-    background: radial-gradient(circle at top, #020617 0%, #020617 100%;
+    background: radial-gradient(circle at top, #020617 0%, #020617 100%);
     color: #e5e7eb;
     font-family: 'Inter', system-ui, sans-serif;
 }
@@ -79,8 +79,7 @@ h1, h2, h3 {
 /* CTA BUTTON */
 .cta button {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #3B9797;
-    text-align: center;
+    color: white;
     border-radius: 18px;
     padding: 0.8rem 2.2rem;
     font-size: 1.05rem;
@@ -94,7 +93,7 @@ h1, h2, h3 {
 
 /* INPUTS */
 input, select {
-    background-color: #3B4953 !important;
+    background-color: #020617 !important;
     border: 1px solid #1e293b !important;
     border-radius: 12px !important;
     color: #f8fafc !important;
@@ -102,8 +101,8 @@ input, select {
 
 /* BUTTONS */
 .stButton > button {
-    background: #3B9797;
-    color: #3B4953;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
     border-radius: 14px;
     padding: 0.6rem 1.4rem;
     font-weight: 600;
@@ -176,7 +175,7 @@ def generate_pdf(filename, data):
 
 
 # ================== TABS ==================
-tab_welcome, tab_predictor = st.tabs([" Welcome", " Predictor"])
+tab_welcome, tab_predictor = st.tabs(["🏠 Welcome", "🚴 Predictor"])
 
 
 # ================== WELCOME PAGE ==================
@@ -184,13 +183,12 @@ with tab_welcome:
 
     st.markdown("""
     <div class="hero">
-        <div class="hero-title">Cycling Performance<br><span style="color:#3B9797">Prediction</span></div>
+        <div class="hero-title">Cycling Performance<br>Prediction</div>
         <div class="hero-sub">
             Predict your <b>average speed</b>, <b>power output</b>, and
             <b>calories burned</b> using Machine Learning combined with
             real-world cycling physics.
         </div>
-        <div class="hero-sub"> Developed by :<span style="color: #3B9797"> Mohsin HM </span></div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -228,6 +226,8 @@ with tab_welcome:
         st.info("👉 Go to **Predictor** tab to start")
         st.markdown('</div>', unsafe_allow_html=True)
 
+    st.caption("Developed by **Mohsin HM** | Cycling & Data Science")
+
 
 # ================== PREDICTOR PAGE ==================
 with tab_predictor:
@@ -253,7 +253,7 @@ with tab_predictor:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    run = st.button(" Predict & Save Ride")
+    run = st.button("🚴 Predict & Save Ride")
 
     if run:
 
