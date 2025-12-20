@@ -29,7 +29,7 @@ st.set_page_config(
 _style = """
 <style>
 html, body, [data-testid="stAppViewContainer"] {
-    background: #94B4C1;
+    background: #1B211A;
     color: #e5e7eb;
     font-family: 'Inter', system-ui, sans-serif;
 }
