@@ -103,7 +103,7 @@ input, select {
 /* BUTTONS */
 .stButton > button {
     background: #3B9797;
-    color: white;
+    color: #3B4953;
     border-radius: 14px;
     padding: 0.6rem 1.4rem;
     font-weight: 600;
